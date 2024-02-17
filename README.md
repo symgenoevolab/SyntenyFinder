@@ -42,7 +42,7 @@ SyntenyFinder
 * ```plot_ideogram``` provides the file tree necessary to visualise the macrosynteny using RIdeogram
     * The karyotype and coordinate output files from ```SyntenyFinder``` should be copied into the ```input``` folder.
     * ```plot_ideogriam.R``` generates the plots and saves the resulting svg and pdf files in ```ideograms/svg``` and ```ideograms/pdf``` respectively. 
-* ```Bryozoan_Synteny``` contains the code and data used to generate the figures for our research article. We have included it to show our process, but this directory is independent from the rest of the repository. Feel free to omit this directory entirely. 
+* ```Bryozoan_Synteny``` contains the code and data used to generate the figures for our research article. We have included it to show our process, but this directory is independent from the rest of the repository. **Feel free to omit this directory entirely.**
     * ```Synteny_main.ipynb``` generated karyotype and coordinate files in a more customisable manner, allowing for a wider variety of intake files.
     * ```input_data``` contains links to our Dryad repository to download our Bryozoan genome files. 
     * ```synteny_v5.5.R``` generated Oxford dot plots and RIdeogram macrosynteny plots, and additionally analysed mixing rates.
