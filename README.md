@@ -151,8 +151,8 @@ SyntenyFinder
     ├── ideograms (*)
     │   ├── pdf (*)
     │   └── svg (*)
-    ├── input
-    │   └── <output from SyntenyFinder>
+    ├── input (*)
+    │   └── <copy output from SyntenyFinder>
     └── plot_ideogram.R
 ```
 This script generates SVG and PDF files which can then be modified in illustrator to create the final figures. 
