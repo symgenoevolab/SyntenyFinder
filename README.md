@@ -7,7 +7,7 @@ This repository contains a series of scripts which can be used to perform and vi
 
 ```plot_ideogram.R``` takes the generated files and creates macrosynteny plots. 
 
-![Bryozoan synteny sample figure](SyntenyFinder/sample_figure.png)
+![Bryozoan synteny sample figure](sample_figure.png)
 
 ## 2. Files in this repository 
 The following tree of files are relevant to running SyntenyFinder: 
