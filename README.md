@@ -7,10 +7,10 @@ This repository contains a series of scripts which can be used to perform and vi
 
 ```plot_ideogram.R``` takes the generated files and creates macrosynteny plots. 
 
-![Bryozoan synteny sample figure](sample_figure.png)
+![Bryozoan synteny sample figure](SyntenyFinder/sample_figure.png)
 
 ## 2. Files in this repository 
-The following tree of files is provided in this repository: 
+The following tree of files are relevant to running SyntenyFinder: 
 ```
 SyntenyFinder
 ├── Bryozoan_Synteny
@@ -28,25 +28,27 @@ SyntenyFinder
 ├── SyntenyFinder.py
 ├── dependencies
 │   ├── Bfl
-│   │   ├── Bfl.fna
+│   │   ├── Bfl.fna (*)
 │   │   ├── Bfl_ALGs.fasta
-│   │   └── Bfl_gene_rows.gtf
+│   │   └── Bfl_gene_rows.gtf (*)
 │   └── Synteny_functions.py
 └── plot_ideogram
     └── plot_ideogram.R
 ```
+While most of the necessary run files are provided in this repository, the bryozoan genomes are not currently included, as our manuscript is still a preprint. Additionally, the two Bfl files marked with a ```(*)``` need to be downloaded separately (See ```Bfl``` below). 
+
 * ```SyntenyFinder.py``` is a python script which downloads genome assemblies from NCBI, runs OrthoFinder, and generates the karyotype and coordinate files necessary for macrosynteny analysis. 
 * ```dependencies``` contains the files needed to run ```SyntenyFinder.py```
     * ```Synteny_functions.py``` contains the required helper functions. 
-    * ```Bfl``` contains the genome data for the *Branchiostoma floridae* ALG dataset used for comparison by default.
+    * ```Bfl``` contains the proteome data for the *Branchiostoma floridae* ALG dataset used for comparison by default. The .fna and .gtf files marked with a ```(*)``` have not been provided but can be downloaded from [here](http://fmarletaz.github.io/Resources/). Please ensure they are correctly renamed and moved to the correct location. 
 * ```plot_ideogram``` provides the file tree necessary to visualise the macrosynteny using RIdeogram
     * The karyotype and coordinate output files from ```SyntenyFinder``` should be copied into the ```input``` folder.
     * ```plot_ideogriam.R``` generates the plots and saves the resulting svg and pdf files in ```ideograms/svg``` and ```ideograms/pdf``` respectively. 
 * ```Bryozoan_Synteny``` contains the code and data used to generate the figures for our research article. We have included it to show our process, but this directory is independent from the rest of the repository. **Feel free to omit this directory entirely.**
     * ```Synteny_main.ipynb``` generated karyotype and coordinate files in a more customisable manner, allowing for a wider variety of intake files.
     * ```input_data``` contains links to our Dryad repository to download our Bryozoan genome files. 
-    * ```synteny_v5.5.R``` generated Oxford dot plots and RIdeogram macrosynteny plots, and additionally analysed mixing rates.
-      
+    * ```synteny_v5.5.R``` generated Oxford dot plots and RIdeogram macrosynteny plots, and additionally analysed mixing rates. 
+
 ## 3. Dependencies 
 #### Bash: 
 ```SyntenyFinder.py``` relies on [```OrthoFinder```](https://davidemms.github.io) to identify single-copy orthologous genes. Please first make sure OrthoFinder and all necessary dependencies are [correctly installed](https://davidemms.github.io/orthofinder_tutorials/downloading-and-running-orthofinder.html). 
