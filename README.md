@@ -10,14 +10,14 @@ This repository contains a series of scripts which can be used to perform and vi
 ![Bryozoan synteny sample figure](sample_figure.png)
 
 ## 2. Files in this repository 
-The following tree of files are relevant to running SyntenyFinder: 
+File tree for SyntenyFinder: 
 ```
 SyntenyFinder
 ├── Bryozoan_Synteny
 │   ├── Synteny_main.ipynb
 │   ├── dependencies
 │   │   └── Synteny_functions.ipynb
-│   ├── input_data
+│   ├── input_data (*)
 │   │   ├── gene_rows
 │   │   │   └── ...
 │   │   ├── genomes
@@ -35,6 +35,8 @@ SyntenyFinder
 └── plot_ideogram
     └── plot_ideogram.R
 ```
+Items marked with a ```(*)``` are not provided in this repository. 
+
 While most of the necessary run files are provided in this repository, the bryozoan genomes are not currently included, as our manuscript is still a preprint. Additionally, the two Bfl files marked with a ```(*)``` need to be downloaded separately (See ```Bfl``` below). 
 
 * ```SyntenyFinder.py``` is a python script which downloads genome assemblies from NCBI, runs OrthoFinder, and generates the karyotype and coordinate files necessary for macrosynteny analysis. 
