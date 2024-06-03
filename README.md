@@ -7,7 +7,7 @@ This repository contains a series of scripts which can be used to perform and vi
 For genomes without a published annotation on NCBI, the folder ```SyntenyFinder_customisable``` contains ```Synteny_main.ipynb```, which is a fully customisable script which can intake a wide range of annotation formats. 
 ```plot_ideogram.R``` takes the generated files and creates macrosynteny plots. 
 
-![Bryozoan synteny sample figure](SyntenyFinder/sample_figure.png)
+![Bryozoan synteny sample figure](sample_figure.png)
 
 
 File tree for SyntenyFinder: 
