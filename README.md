@@ -47,7 +47,7 @@ While most of the necessary run files are provided in this repository, the bryoz
     * ```Bfl``` contains the proteome data for the *Branchiostoma floridae* ALG dataset used for comparison by default. The .fna and .gtf files marked with a ```(*)``` have not been provided but can be downloaded from [here](http://fmarletaz.github.io/Resources/). Please ensure they are correctly renamed and moved to the correct location. 
 * ```plot_ideogram``` provides the file tree necessary to visualise the macrosynteny using RIdeogram
     * The karyotype and coordinate output files from ```SyntenyFinder``` should be copied into the ```input``` folder.
-    * ```plot_ideogriam.R``` generates the plots and saves the resulting svg and pdf files in ```ideograms/svg``` and ```ideograms/pdf``` respectively. 
+    * ```plot_ideogram.R``` generates the plots and saves the resulting svg and pdf files in ```ideograms/svg``` and ```ideograms/pdf``` respectively. 
 * ```SyntenyFinder_customisable``` contains the code and data used to generate the figures for our research article and is customisable, allowing for different sources of intake files. This folder works independently, and could be omitted from, or used instead of, the rest of the repository. 
     * ```Synteny_main.ipynb``` generated karyotype and coordinate files in a more customisable manner, allowing for a wider variety of intake files.
     * ```input_data``` contains links to our Dryad repository to download our Bryozoan genome files. 
