@@ -3,17 +3,17 @@
 ## 1. Description 
 This repository contains a series of scripts which can be used to perform and visualise macrosynteny analysis on chromosome level genomes of metazoan species. 
 
-```SyntenyFinder.py``` is a python script which takes NCBI genome assembly accessions and provides the karyotype and coordinate files necessary to run synteny analysis using Rideogram.
-
+```SyntenyFinder.py``` is a python script to run on command line. Given a list of NCBI genome assembly accessions, the script downloads the associated annotated genomes, runs OrthoFinder, and automatically generates the karyotype and coordinate files necessary to run synteny analysis in RIdeogram. 
+For genomes without a published annotation on NCBI, the folder ```SyntenyFinder_customisable``` contains ```Synteny_main.ipynb```, which is a fully customisable script which can intake a wide range of annotation formats. 
 ```plot_ideogram.R``` takes the generated files and creates macrosynteny plots. 
 
-![Bryozoan synteny sample figure](sample_figure.png)
+![Bryozoan synteny sample figure](SyntenyFinder/sample_figure.png)
 
-## 2. Files in this repository 
+
 File tree for SyntenyFinder: 
 ```
 SyntenyFinder
-├── Bryozoan_Synteny
+├── SyntenyFinder_customisable
 │   ├── Synteny_main.ipynb
 │   ├── dependencies
 │   │   └── Synteny_functions.ipynb
@@ -37,6 +37,8 @@ SyntenyFinder
 ```
 Items marked with a ```(*)``` are not provided in this repository. 
 
+
+## 2. Files in this repository 
 While most of the necessary run files are provided in this repository, the bryozoan genomes are not currently included, as our manuscript is still a preprint. Additionally, the two Bfl files marked with a ```(*)``` need to be downloaded separately (See ```Bfl``` below). 
 
 * ```SyntenyFinder.py``` is a python script which downloads genome assemblies from NCBI, runs OrthoFinder, and generates the karyotype and coordinate files necessary for macrosynteny analysis. 
@@ -46,7 +48,7 @@ While most of the necessary run files are provided in this repository, the bryoz
 * ```plot_ideogram``` provides the file tree necessary to visualise the macrosynteny using RIdeogram
     * The karyotype and coordinate output files from ```SyntenyFinder``` should be copied into the ```input``` folder.
     * ```plot_ideogriam.R``` generates the plots and saves the resulting svg and pdf files in ```ideograms/svg``` and ```ideograms/pdf``` respectively. 
-* ```Bryozoan_Synteny``` contains the code and data used to generate the figures for our research article. We have included it to show our process, but this directory is independent from the rest of the repository. **Feel free to omit this directory entirely.**
+* ```SyntenyFinder_customisable``` contains the code and data used to generate the figures for our research article and is customisable, allowing for different sources of intake files. This folder works independently, and could be omitted from, or used instead of, the rest of the repository. 
     * ```Synteny_main.ipynb``` generated karyotype and coordinate files in a more customisable manner, allowing for a wider variety of intake files.
     * ```input_data``` contains links to our Dryad repository to download our Bryozoan genome files. 
     * ```synteny_v5.5.R``` generated Oxford dot plots and RIdeogram macrosynteny plots, and additionally analysed mixing rates. 
