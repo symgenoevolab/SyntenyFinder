@@ -1,7 +1,10 @@
-# SyntenyFinder
+
+![SyntenyFinder (1)](https://github.com/user-attachments/assets/7815cc8a-7ae2-47e7-b668-ad64476e0332)
+
 
 ## 1. Description 
 This repository contains a series of scripts which can be used to perform and visualise macrosynteny analysis on chromosome level genomes of metazoan species. 
+
 
 ```SyntenyFinder.py``` is a python script to run on command line. Given a list of NCBI genome assembly accessions, the script downloads the associated annotated genomes, runs OrthoFinder, and automatically generates the karyotype and coordinate files necessary to run synteny analysis in RIdeogram. 
 For genomes without a published annotation on NCBI, the folder ```SyntenyFinder_customisable``` contains ```Synteny_main.ipynb```, which is a fully customisable script which can intake a wide range of annotation formats. 
