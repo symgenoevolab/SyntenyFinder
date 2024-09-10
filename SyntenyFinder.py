@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[5]:
 
 
-print('Importing dependencies') 
+print('Importing dependencies')
 import subprocess 
 import os
 import re
@@ -17,29 +17,31 @@ from io import StringIO
 from dependencies.Synteny_functions import Synteny, NCBI_Synteny, run_NCBI_Synteny
 
 
-# In[ ]:
+# In[2]:
 
 
 def SyntenyFinder(): 
+ 
+
     parser = argparse.ArgumentParser(description = 'Run synteny analysis')
     parser.add_argument('--accessions', 
                         type = str, 
                         help = 'Comma separated list of accessions for NCBI annotated genome assemblies') 
     parser.add_argument('--orthofinder', 
                         type = str, 
-                        help = 'Path to executable OrthoFinder if not installed') 
-    parser.add_argument('--threads', 
+                        help = 'Path to executable orthofinder if not installed') 
+    parser.add_argument('--threads', '-t', 
                         type = int, 
-                        help = 'Number of threads to use when running OrthoFinder') 
-    parser.add_argument('--run_name', 
+                        help = 'Number of threads to use when running orthofinder') 
+    parser.add_argument('--run_name', '-n', 
                         type = str, 
                         help = 'Name of this run iteration (will become directory name)') 
-    parser.add_argument('--directory', 
+    parser.add_argument('--directory', '-d', 
                         type = str, 
                         help = 'Root directory for analysis folder to be created') 
     parser.add_argument('--algs', 
                         type = str, 
-                        help = 'Code or accession of species used in run to trace ancestral linkage groups') 
+                        help = 'Species code or accession for dataset used to trace ancestral lineage groups') 
 
     args = parser.parse_args() 
     
@@ -55,11 +57,11 @@ def SyntenyFinder():
         raise Exception('List of accesssions for NCBI annotated genome assemblies must be provided')
 
     if args.algs is not None: 
-        print(f'Tracing linkage groups from chromosomes of species code {args.algs}')
+        print(f'Tracing lineage groups from chromosomes of species code {args.algs}')
         algs = args.algs
     else: 
-        print(f'Tracing default ancestral lineage groups from Bfl') 
-        algs = 'Bfl'
+        print(f'No alg species provided. Tracing groups from chromosomes of first species listed: {accessions[0]}') 
+        algs = accessions[0]
         
     if args.directory is not None: 
         print(f'Root directory: {args.directory}')
@@ -92,7 +94,16 @@ if __name__ == "__main__":
     SyntenyFinder() 
 
 
-# In[ ]:
+# # In[6]:
+
+
+# get_ipython().run_line_magic('run', 'dependencies/Synteny_functions.ipynb')
+# synteny = run_NCBI_Synteny(accessions = ['GCF_000003815.2','GCF_902652985.1'] , 
+#                            run_name = 'Bfl_Pma_sample', 
+#                            root_directory = './', algs = 'first', 
+#                            threads = 100)
+
+
 
 
 

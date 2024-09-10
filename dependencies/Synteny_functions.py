@@ -5,7 +5,7 @@
 
 
 # Isabel Jiah-Yih Liao
-# January 2024 
+# Edited 3rd September 2024 
 # Synteny helper functions
 
 # This file contains the helper functions needed to run Synteny. 
@@ -481,7 +481,7 @@ class Synteny:
 class NCBI_Synteny(Synteny): 
     def __init__(self, accessions, 
                  run_name, 
-                 algs = 'Bfl', 
+                 algs = 'first', 
                  root_directory = './', 
                  proteome_ext = '.faa', 
                  features_ext = '.gff', 
@@ -504,15 +504,17 @@ class NCBI_Synteny(Synteny):
         return 
 
     def check_alg_input(self, algs): 
-        if (algs in self.metadata.index) or (algs == 'Bfl'): 
+        if (algs == 'first'): 
+            print(self.metadata.index[0])
+            return self.metadata.index[0]
+        elif (algs in self.metadata.index): # or (algs == 'Bfl'): 
             return algs 
         elif algs in self.metadata['Accession'].values:
             return self.metadata[self.metadata['Accession']==algs].index[0]
         else: 
             print(algs)
             print(self.metadata['Accession'])
-            raise Exception("Please specify an accession or species code for tracing lineage groups, "\
-                            "or input 'Bfl' to run with the default bilaterian alg dataset.") 
+            raise Exception("Please specify an accession or species code for tracing lineage groups. ") 
             
         
     # Make a table containing the metadata from the NCBI assemblies
@@ -523,6 +525,13 @@ class NCBI_Synteny(Synteny):
         binomial_names = metadata['Organism_Name'].tolist()
         species_codes = self.make_species_codes(binomial_names) 
         metadata.index = species_codes
+        for index, row in metadata[metadata['Chromosomes'].isna()].iterrows(): 
+            print(f"Number of chromosomes not found on NCBI metadata for {row['Organism_Name']} ({row['Accession']})")
+            species_karyotype = input(f"Please provide the number of chromosomes to use for further analysis. \nAdditionally, please double-check that the accession provided is for an annotated chromosome-level genome")
+            metadata.at[index, 'Chromosomes'] = float(species_karyotype)
+        metadata['Chromosomes'] = metadata['Chromosomes'].astype(int)
+        print(metadata) 
+            
         return metadata
 
     # With subprocess, pull accession metadata from NCBI using datasets and dataformat
@@ -577,8 +586,8 @@ class NCBI_Synteny(Synteny):
                 except Exception as e: 
                     print(f"Error downloading or parsing data for {self.metadata.loc[species]['Organism_Name']}.")
                     return e
-        if self.get_algs == 'Bfl': 
-            self.add_bfl_algs() 
+        # if self.get_algs == 'Bfl': 
+        #     self.add_bfl_algs() 
                     
     def download_and_parse(self, species): 
         species_folder = self.make_dir('ncbi_downloads', species) 
@@ -632,27 +641,27 @@ class NCBI_Synteny(Synteny):
                 os.rename(found_file, new_file_name) 
                 self.dirs[identifier] = new_file_name
 
-    ###########
-    ### Incorporate ALGs from either Bfl or by tracing genes for a given species
-    ###########
+    # ###########
+    # ### Incorporate ALGs by tracing genes for a given species
+    # ###########
     def incorporate_algs(self): 
-        if self.get_algs == 'Bfl': 
-            self.parse_algs('Bfl')
-            self.trace_algs('Bfl')
-        else: 
-            self.trace_chromosomes(self.get_algs)
+    #     if self.get_algs == 'Bfl': 
+    #         self.parse_algs('Bfl')
+    #         self.trace_algs('Bfl')
+    #     else: 
+        self.trace_chromosomes(self.get_algs)
     
-    def add_bfl_algs(self): 
-        bfl_path = os.path.join('dependencies', 'Bfl') 
-        bfl_files = {'proteomes': 'Bfl_ALGs.fasta', 
-                     'genomes': 'Bfl.fna', 
-                     'features': 'Bfl_gene_rows.gtf'}
-        for type, filename in bfl_files.items(): 
-            identifier = 'Bfl_' + type
-            self.dirs[identifier] = os.path.join(bfl_path, filename) 
-        self.metadata.loc['Bfl'] = ['N/A', 'Branchiostoma floridae', 19]
-        self.species_data['Bfl'] = dict() 
-        return(bfl_path)
+    # def add_bfl_algs(self): 
+    #     bfl_path = os.path.join('dependencies', 'Bfl') 
+    #     bfl_files = {'proteomes': 'Bfl_ALGs.fasta', 
+    #                  'genomes': 'Bfl.fna', 
+    #                  'features': 'Bfl_gene_rows.gtf'}
+    #     for type, filename in bfl_files.items(): 
+    #         identifier = 'Bfl_' + type
+    #         self.dirs[identifier] = os.path.join(bfl_path, filename) 
+    #     self.metadata.loc['Bfl'] = ['N/A', 'Branchiostoma floridae', 19]
+    #     self.species_data['Bfl'] = dict() 
+    #     return(bfl_path)
 
     ############
     ### Building the karyotype file
@@ -686,8 +695,8 @@ class NCBI_Synteny(Synteny):
     def build_coordinates(self): 
         for species in self.metadata.index: 
             self.gtf_to_dataframe(species, annotation_type = 'protein_id')
-        if self.get_algs == 'Bfl': 
-            self.gtf_to_dataframe('Bfl', annotation_type = 'gene_id')
+        # if self.get_algs == 'Bfl': 
+        #     self.gtf_to_dataframe('Bfl', annotation_type = 'gene_id')
         self.gtf_add_species()
         self.merge_gtf()
         self.incorporate_algs()
@@ -702,7 +711,7 @@ class NCBI_Synteny(Synteny):
 # In[9]:
 
 
-def run_NCBI_Synteny(accessions, run_name, algs = 'Bfl', 
+def run_NCBI_Synteny(accessions, run_name, algs = 'first', 
                      root_directory = './', orthofinder_path = 'orthofinder', threads = None): 
     synteny = NCBI_Synteny(accessions, run_name, 
                            root_directory = root_directory, algs = algs)
@@ -714,126 +723,6 @@ def run_NCBI_Synteny(accessions, run_name, algs = 'Bfl',
     synteny.make_karyotype_files()
     synteny.build_coordinates()
     return(synteny)
-
-
-# In[ ]:
-
-
-# class NCBI_Synteny(Synteny): 
-#     def __init__(self, accessions, 
-#                  species_codes, 
-#                  run_name, 
-#                  root_directory = './', 
-#                  proteome_ext = '.faa', 
-#                  features_ext = '.gff', 
-#                  genome_ext = '.fna'): 
-#         self.species_codes = species_codes
-#         self.accessions = dict(zip(species_codes, accessions))
-#         self.species_data = {species:dict() for species in species_codes}
-#         self.dirs = dict() 
-#         self.dirs['root'] = root_directory
-#         self.run_name = run_name
-#         self.proteome_ext = proteome_ext
-#         self.features_ext = features_ext
-#         self.genome_ext = genome_ext 
-#         self.build()
-#         try: 
-#             self.make_dir(root, 'ncbi_downloads') 
-#         except: 
-#             self.add_dir(root, 'ncbi_downloads')
-#         return 
-        
-#     ###########
-#     ### Getting datasets from NCBI 
-#     ###########
-    
-#     def ncbi_get_datasets(self): 
-#         with concurrent.futures.ThreadPoolExecutor() as executor: 
-#             futures = {executor.submit(self.download_and_parse, species) : species
-#                        for species in self.accessions.keys()}
-#             for future in concurrent.futures.as_completed(futures):
-#                 species = futures[future]
-#                 try: 
-#                     future.result()
-#                 except Exception as e: 
-#                     print(f"Error downloading or parsing data for species {species}.")
-                                       
-#     def download_and_parse(self, species): 
-#         species_folder = self.make_dir('ncbi_downloads', species) 
-#         datafile =  f"{species_folder}/ncbi_dataset/data/{self.accessions[species]}"
-#         if os.path.exists(datafile): 
-#             print(f"Data found for accession {self.accessions[species]}: Skipping {species}.") 
-#         else: 
-#             self.ncbi_download(species, species_folder) 
-#             self.parse_ncbi_zip(species, species_folder) 
-        
-#         self.arrange_files(species, datafile)
-    
-#     # Downloads datasets from NCBI, but assumes NCBI 'datasets' already installed
-#     def ncbi_download(self, species, species_folder): 
-#         accession = self.accessions[species]
-#         filepath = os.path.join(species_folder, 'ncbi_dataset.zip') 
-#         command = ['datasets',  'download', 
-#                    'genome', 'accession', accession, 
-#                    '--include', 'gff3,genome,protein',
-#                    '--filename', filepath, 
-#                    '--no-progressbar']
-#         print(f"Downloading {species} data from accession {accession}. \n This may take a while...") 
-#         print(' '.join(command))
-#         try: 
-#             result = subprocess.run(command)
-#             print(f"Download complete. Genome {accession} saved to {filepath}.")
-#             return 
-#         except: 
-#             raise Exception(f"Issue encountered while attempting to download accession {accession}.")
-    
-#     def parse_ncbi_zip(self, species, species_folder): 
-#         filepath = os.path.join(species_folder, 'ncbi_dataset.zip') 
-#         with zipfile.ZipFile(filepath, 'r') as zip_ref: 
-#             zip_ref.extractall(species_folder)
-#         datafile = f"{species_folder}/ncbi_dataset/data/{self.accessions[species]}"
-
-#     def arrange_files(self, species, datafile): 
-#         contents = os.listdir(datafile)
-#         for type, extension in [('proteomes', self.proteome_ext), 
-#                                 ('genomes', self.genome_ext), 
-#                                 ('features', self.features_ext)]: 
-#             files = [filename for filename in contents if filename.endswith(extension)] 
-            
-#             if len(files) != 1: 
-#                 print(f"Incorrect number of {type} files found for {species} [{len(files)}]") 
-#             else: 
-#                 identifier = f"{species}_{type}" 
-#                 found_file = os.path.join(datafile, files[0]) 
-#                 new_file_name = os.path.join(datafile, f"{species}{extension}") 
-#                 os.rename(found_file, new_file_name) 
-#                 self.dirs[identifier] = new_file_name
-        
-
-
-# In[ ]:
-
-
-# def check(self, proteome_ext): 
-#     self.add_dir('root', 'input_data') 
-#     for type, extension in [('proteomes', proteome_ext), 
-#                             ('genomes', genome_ext), 
-#                             ('features', features_ext)]: 
-#         self.add_dir('input_data', type)
-
-#         # print(f"Checking files in {self.dirs[type]}...")
-#         contents = os.listdir(self.dirs[type])
-#         contents = [filename for filename in contents if filename.endswith(extension)]
-#         for species in species_codes: 
-#             files = [filename for filename in contents if filename.startswith(species)]
-#             # print(files[0])
-#             if len(files) != 1: 
-#                 print(f"Incorrect number of {type} files found for {species} \n{files}")
-#             else: 
-#                 identifier = f"{species}_{type}"
-#                 self.dirs[identifier] = os.path.join(self.dirs[type], files[0])
-#     print('File check complete') 
-#     return
 
 
 # In[ ]:
