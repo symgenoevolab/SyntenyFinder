@@ -81,7 +81,7 @@ Use the following command:
 To generate karyotype and coordinate files, run the following command in ```/SyntenyFinder```: 
 
 ```
-python SyntenyFinder.py --accessions GCA_914767715.1,GCF_902652985.1 --run_name get_synteny
+python SyntenyFinder.py --accessions GCF_910592395.1,GCF_902652985.1 --run_name get_synteny
 ```
 This command downloads the GenBank annotated genome assembly [GCA_914767715.1](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_001039355.2/) for the Bryozoan species *Membranipora membranacea* and the RefSeq annotated genome assembly [GCF_902652985.1](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_902652985.1/) for the scallop *Pecten maximus*. It runs OrthoFinder and finds single-copy orthologues, then generates karyotype and coordinate files. The folder ```get_synteny``` is created within the working directory  ```/SyntenyFinder``` to store output, as well as intermediate run files. 
 
