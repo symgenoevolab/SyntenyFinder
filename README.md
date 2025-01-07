@@ -176,7 +176,7 @@ This script generates SVG and PDF files which can then be modified in illustrato
 ## 6. Additional information
 
 ### Citation
-Please cite our preprint if you use this pipeline: 
+Please cite our publication if you use this pipeline: 
 
-[T. D. Lewin, I. J.-Y. Liao, M.-E. Chen, J. D. D. Bishop, P. W. H. Holland, Y.-J. Luo, ​​Fusion, Fission, and Scrambling of the Bilaterian Genome in Bryozoa. bioRxiv, 2024.02.15.580425 (2024).](https://doi.org/10.1101/2024.02.15.580425)
+[T. D. Lewin, I. J.-Y. Liao, M.-E. Chen, J. D. D. Bishop, P. W. H. Holland, Y.-J. Luo. ​​Fusion, fission, and scrambling of the bilaterian genome in Bryozoa. *Genome Research*, 2025; DOI:10.1101/gr.279636.124.](https://doi.org/10.1101/gr.279636.124) 
 
